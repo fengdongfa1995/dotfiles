@@ -16,3 +16,7 @@ python ~/.scripts/wallpaper/bing_today_wallpaper_crawler.py &
 
 # input method
 fcitx &
+
+# alpha terminal 
+# sudo pacman -S picom
+picom &
