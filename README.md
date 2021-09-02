@@ -1,2 +1,7 @@
-# dotfiles
-dotfiles in my Linux environment
+# dotfile
+
+#### 介绍
+我的linux环境下的各种配置文件
+
+#### 使用说明
+将项目的根目录看成是自己的home文件夹，把文件放进相应的位置就可以了。
