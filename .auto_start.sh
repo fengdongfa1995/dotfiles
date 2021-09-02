@@ -13,3 +13,6 @@ bash ~/.scripts/wallpaper/change_wallpaper_periodically.sh
 
 # start input method
 fcitx
+
+# power manager
+mate-power-manager
