@@ -113,9 +113,6 @@ void *xmalloc(size_t);
 void *xrealloc(void *, size_t);
 char *xstrdup(const char *);
 
-// from @LukeSmithxyz
-void externalpipe(const Arg *);
-
 /* config.h globals */
 extern char *utmp;
 extern char *scroll;
