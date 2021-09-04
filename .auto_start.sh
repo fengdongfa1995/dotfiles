@@ -20,3 +20,6 @@ fcitx &
 # alpha terminal 
 # sudo pacman -S picom
 picom &
+
+# proxy
+qv2ray &
