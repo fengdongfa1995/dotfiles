@@ -1,7 +1,9 @@
 #!/bin/bash
+LOC=$(readlink -f "$0")
+DIR=$(dirname "$LOC")
 
 while true
 do
-	bash ./dwm-status-refresh.sh
+	bash "$DIR/dwm-status-refresh.sh"
 	sleep 2
 done
