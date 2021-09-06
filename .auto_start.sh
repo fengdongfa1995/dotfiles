@@ -24,5 +24,5 @@ picom &
 # proxy
 qv2ray &
 
-# status bar
-bash ~/.scripts/status_bar/dwm-status.sh &
+# status bar 
+slstatus &
