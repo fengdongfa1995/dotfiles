@@ -14,6 +14,9 @@ mate-power-manager &
 # download a new wallpaper from bing.com
 python ~/.scripts/wallpaper/bing_today_wallpaper_crawler.py &
 
+# input method
+fcitx5 -d &
+
 # alpha terminal 
 # sudo pacman -S picom
 picom &
@@ -23,6 +26,3 @@ qv2ray &
 
 # status bar 
 slstatus &
-
-# input method
-fcitx &
