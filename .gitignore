@@ -132,3 +132,6 @@ dmypy.json
 *.rej
 *.orig
 *.o
+
+# python script used to test python script
+test.py
