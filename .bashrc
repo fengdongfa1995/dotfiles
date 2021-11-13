@@ -6,7 +6,10 @@
 [[ $- != *i* ]] && return
 
 alias ls='ls --color=auto'
-PS1='[\u@\h \W]\$ '
 
-alias proxy_up='export all_proxy=http://127.0.0.1:8889'
+# proxy setting in WSL2
+host=$(cat /etc/resolv.conf |grep -oP '(?<=nameserver\ ).*')
+port=10809
+
+alias proxy_up='export all_proxy=http://${host}:${port}'
 alias proxy_down='unset all_proxy'
