@@ -128,10 +128,11 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# st
+# suckless.org
 *.rej
 *.orig
 *.o
+config.h
 
 # python script used to test python script
 test.py
