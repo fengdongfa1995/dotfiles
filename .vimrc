@@ -1,24 +1,25 @@
 " 自动安装插件管理器vim-plug
-" WSL2连不上github时请参考https://feng.dongfa.pro/2020/12/wsl2_v2rayn/
+" 如果网络较好但下载速度较慢，可以考虑挂VPN后重新打开Vim
+let need_to_install_plugins = 0
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  let need_to_install_plugins = 1
 endif
 
 " 列举需要安装的vim插件
 call plug#begin()
-Plug 'ctrlpvim/ctrlp.vim'          " 查找文件
-Plug 'jiangmiao/auto-pairs'        " 自动闭合括号
-Plug 'kien/rainbow_parentheses.vim'  " 彩虹括号对
-Plug 'mhinz/vim-startify'          " 打开vim时显示最近打开文件
-Plug 'preservim/nerdcommenter'     " 快速注释代码
-Plug 'preservim/nerdtree'          " 文件树
-Plug 'SirVer/ultisnips'            " 代码片段管理
-Plug 'tomasr/molokai'              " molokai配色方案
-Plug 'tpope/vim-fugitive'          " Git支持
-Plug 'tpope/vim-surround'          " 处理标记对
-Plug 'vim-airline/vim-airline'     " 美化状态栏
+Plug 'preservim/nerdtree'                           " 文件树
+Plug 'jiangmiao/auto-pairs'                         " 自动闭合括号
+Plug 'kien/rainbow_parentheses.vim'                 " 彩虹括号对
+Plug 'mhinz/vim-startify'                           " 打开vim时显示最近打开文件
+Plug 'preservim/nerdcommenter'                      " 快速注释代码
+Plug 'SirVer/ultisnips'                             " 代码片段管理
+Plug 'tomasr/molokai'                               " molokai配色方案
+Plug 'tpope/vim-surround'                           " 处理标记对
+Plug 'vim-airline/vim-airline'                      " 美化状态栏
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " 模糊补全查找文件
 
 " 各种语言的支持型插件
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
@@ -26,16 +27,25 @@ Plug 'lervag/vimtex'
 Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' } 
 call plug#end()
 
+" 自动安装在上文当中罗列的各种插件
+if need_to_install_plugins == 1
+    echo "Installing plugins..."
+    silent! PlugInstall
+    echo "Done!"
+    q
+endif
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                 变更Vim自身提供的各种设置项                "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible                      " 关闭兼容模式
-syntax on                             " 代码高亮
+
+filetype plugin indent on             " 检测文本类型并以此控制缩进
 
 set number                            " 显示行号
+syntax on                             " 代码高亮
 
 " 缩进相关设置
-filetype plugin indent on             " 检测本文类型，控制缩进
 set autoindent                        " 自动缩进
 set expandtab                         " 将<TAB>显示为空格
 set tabstop=2                         " 一个<TAB>显示为2个空格
@@ -84,6 +94,12 @@ set fileencodings=utf-8,gbk
 set autoread                          " 文件被外部编辑器修改时发出提醒
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                    插件NERDTree相关设置                    "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 按下Ctrl + e打开或关闭文件树
+nnoremap <C-e> :NERDTreeToggle<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                    插件vimtex相关设置                      "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:tex_flavor='latex'
@@ -92,18 +108,15 @@ let g:vimtex_quickfix_mode=0          " 不直接显示编译错误信息
 let g:vimtex_view_general_viewer='SumatraPDF.exe'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                    插件python-mode相关设置                      "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:pymode_folding = 0              " 开启Python代码折叠
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                    插件UltiSnips相关设置                   "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:UltiSnipsJumpForwardTrigger='<tab>'     " 使用<TAB>跳转到下一处待填处
 let g:UltiSnipsJumpBackwardTrigger='<s-tab>'  " 使用<S-TAB>跳转到上一处
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                    插件NERDTree相关设置                    "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 按下Ctrl + e打开或关闭文件树
-nnoremap <C-e> :NERDTreeToggle<CR>
-" 按下<leader> + e打开当前文件所在文件树
-nnoremap <leader>e :NERDTreeFind<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "         插件rainbow_parentheses相关设置                    "
@@ -140,8 +153,3 @@ au Syntax * RainbowParenthesesLoadBraces
 let g:mkdp_browser = 'msedge.exe'             " 将预览浏览器设置为Edge
 let g:mkdp_refresh_slow = 1                   " 保存或退出插入模式时刷新
 let g:mkdp_auto_start = 1                     " 进入markdown模式后自动预览
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                 插件python-mode相关设置                    "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:pymode_lint_checkers = ['pylint', 'pep8', 'mccabe']
